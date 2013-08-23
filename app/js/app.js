@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-  var width = 960,
-      height = 960,
+  var width = 800,
+      height = 800,
       nodeRad = 10;
 
   var json;
@@ -16,7 +16,7 @@
   var force = d3.layout.force()
       .gravity(0.05)
       .distance(function(d){
-        var distance = activeLink ? d.individualValue * 9 : d.mutualValue * 7;
+        var distance = activeLink ? d.individualValue * 9 : d.mutualValue * 6;
         return distance;
       })
       .charge(function(d){
@@ -162,7 +162,11 @@
         .attr('text-anchor', 'start')
         .attr("dy", ".35em")
         .attr("pointer-events", "none")
-        .text(function(d) { return d.name.replace(/ Party.*/, '')});
+        .text(function(d) {
+          var label = activeLink ? '1. ' : '';
+          label += d.name.replace(/ Party.*/, '');
+          return label;
+        });
   }
 
   function click(d){
