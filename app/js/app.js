@@ -86,6 +86,7 @@
     var $loading = $('#loading');
     $loading.show();
     d3.json("/data/" + state + ".json", function(error, data) {
+      force.stop();
       $loading.hide();
       json = {};
       json.nodes = [];
@@ -120,6 +121,9 @@
         });
         link.mutualValue = (link.individualValue + coLink.individualValue) / 2
       });
+      window.json = json;
+      node.remove();
+      link.remove();
       mutual();
     });
   }
@@ -135,6 +139,9 @@
         .nodes(nodeData)
         .links(linkData)
         .start();
+
+    link =  svg.selectAll(".link");
+    node = svg.selectAll(".node");
 
     link = link.data(activeLink ? linkData : []);
 
