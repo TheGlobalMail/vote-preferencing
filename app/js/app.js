@@ -2,7 +2,8 @@
   'use strict';
 
   var width = 960,
-      height = 960;
+      height = 960,
+      nodeRad = 10;
 
   var json;
 
@@ -47,7 +48,7 @@
     //node.attr("cx", function(d) { return d.x;  })
     //  .attr("cy", function(d) { return d.y;  });
 
-    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";  });
+    node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, d.y)) + ")";  });
   }
 
   function collide(node) {
@@ -112,7 +113,7 @@
         return l.target === link.source &&
           l.source == link.target;
       });
-      link.mutualValue = (link.individualValue + coLink.individualValue) / 2 
+      link.mutualValue = (link.individualValue + coLink.individualValue) / 2
     });
     mutual();
   });
@@ -143,7 +144,7 @@
     node.exit().remove();
 
     var nodeEnter = node.enter()
-    
+
     var inside = nodeEnter.append("g")
       .attr("class", "node")
       .attr("pointer-events", "all")
@@ -151,7 +152,7 @@
       .call(force.drag);
 
     inside.append("svg:circle")
-      .attr("r", 10)
+      .attr("r", nodeRad)
       .style("fill", "#555")
       .style("stroke", "#FFF")
       .style("stroke-width", 3);
