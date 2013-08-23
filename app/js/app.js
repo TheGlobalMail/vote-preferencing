@@ -81,42 +81,48 @@
     };
   }
 
-  d3.json("/data/nsw.json", function(error, data) {
-    json = {};
-    json.nodes = [];
-    json.links = [];
-    json.nodeIndex = {};
-    // Extract parties
-    _.each(data, function(row, index){
-      json.nodes.push({ name: row.Party });
-      json.nodeIndex[row.Party] = index;
-    });
-    // Build links
-    json.names = _.pluck(json.nodes, 'name');
-    _.each(json.names, function(name, index){
-      var preferences = data[index];
-      delete preferences.Party;
-      delete preferences[name];
-      _.each(preferences, function(score, target){
-        var scoreF = parseFloat(score)
-        json.links.push({
-          source: index,
-          target: json.nodeIndex[target],
-          value: scoreF,
-          individualValue: scoreF
+  function loadState(){
+    var state = $('#state').val();
+    var $loading = $('#loading');
+    $loading.show();
+    d3.json("/data/" + state + ".json", function(error, data) {
+      $loading.hide();
+      json = {};
+      json.nodes = [];
+      json.links = [];
+      json.nodeIndex = {};
+      // Extract parties
+      _.each(data, function(row, index){
+        json.nodes.push({ name: row.Party });
+        json.nodeIndex[row.Party] = index;
+      });
+      // Build links
+      json.names = _.pluck(json.nodes, 'name');
+      _.each(json.names, function(name, index){
+        var preferences = data[index];
+        delete preferences.Party;
+        delete preferences[name];
+        _.each(preferences, function(score, target){
+          var scoreF = parseFloat(score)
+          json.links.push({
+            source: index,
+            target: json.nodeIndex[target],
+            value: scoreF,
+            individualValue: scoreF
+          });
         });
       });
-    });
-    // let's calculate mutual.. TODO could be so much more efficient
-    _.each(json.links, function(link){
-      var coLink = _.detect(json.links, function(l){
-        return l.target === link.source &&
-          l.source == link.target;
+      // let's calculate mutual.. TODO could be so much more efficient
+      _.each(json.links, function(link){
+        var coLink = _.detect(json.links, function(l){
+          return l.target === link.source &&
+            l.source == link.target;
+        });
+        link.mutualValue = (link.individualValue + coLink.individualValue) / 2
       });
-      link.mutualValue = (link.individualValue + coLink.individualValue) / 2
+      mutual();
     });
-    mutual();
-  });
+  }
 
   function mutual(){
     nodeData = json.nodes;
@@ -188,5 +194,11 @@
     linkData = partyLinks;
     update();
   }
+
+  $('#state').on('change', loadState);
+
+  $(function(){
+    loadState();
+  });
 
 }());
