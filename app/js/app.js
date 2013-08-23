@@ -16,7 +16,7 @@
   var force = d3.layout.force()
       .gravity(0.05)
       .distance(function(d){
-        var distance = activeLink ? d.individualValue * 9 : d.mutualValue * 5;
+        var distance = activeLink ? d.individualValue * 9 : d.mutualValue * 7;
         return distance;
       })
       .charge(function(d){
