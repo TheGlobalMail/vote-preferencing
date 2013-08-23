@@ -16,11 +16,11 @@
   var force = d3.layout.force()
       .gravity(0.05)
       .distance(function(d){
-        var distance = activeLink ? d.individualValue * 9 : d.mutualValue * 6;
+        var distance = activeLink ? d.individualValue * 10 : d.mutualValue * 8;
         return distance;
       })
       .charge(function(d){
-        return -1 * Math.pow(2, activeLink ? d.individualValue : d.mutualValue);
+        return -1 * Math.pow(2.2, activeLink ? d.individualValue : d.mutualValue);
       })
       .size([width, height])
       .on("tick", tick);
@@ -34,16 +34,16 @@
 
     var q = d3.geom.quadtree(node),
       i = 0,
-      n = node.length;
+      n = nodeData.length;
 
     while (++i < n) {
-      q.visit(collide(node[i]));
+      q.visit(collide(nodeData[i]));
     };
 
-    link.attr("x1", function(d) { return d.source.x;  })
-      .attr("y1", function(d) { return d.source.y;  })
-      .attr("x2", function(d) { return d.target.x;  })
-      .attr("y2", function(d) { return d.target.y;  });
+    // link.attr("x1", function(d) { return d.source.x;  })
+    //   .attr("y1", function(d) { return d.source.y;  })
+    //   .attr("x2", function(d) { return d.target.x;  })
+    //   .attr("y2", function(d) { return d.target.y;  });
 
     //node.attr("cx", function(d) { return d.x;  })
     //  .attr("cy", function(d) { return d.y;  });
@@ -55,15 +55,14 @@
     var r,
     nx1 = node.x - r,
     nx2 = node.x + r,
-    ny1 = node.y - r,
-    ny2 = node.y + r;
-    node.radius = 5;
+    ny1 = node.y - 100,
+    ny2 = node.y + 100;
     return function(quad, x1, y1, x2, y2) {
       if (quad.point && (quad.point !== node)) {
         var x = node.x - quad.point.x,
         y = node.y - quad.point.y,
         l = Math.sqrt(x * x + y * y),
-        r = 50; //node.radius + quad.point.radius;
+        r = nodeRad; //node.radius + quad.point.radius;
         if (l < r) {
           l = (l - r) / l * .5;
           node.x -= x *= l;
@@ -131,10 +130,18 @@
   function mutual(){
     nodeData = json.nodes;
     linkData = json.links;
-    update();
+
+    var labels = d3.selectAll('.labels');
+
+    if (labels[0].length > 0) {
+      d3.selectAll('.labels').transition()
+        .text(function(d) { return d.name.replace(/ Party.*/, '')});
+    };
+
+    init();
   }
 
-  function update(){
+  function init(){
     force
         .nodes(nodeData)
         .links(linkData)
@@ -164,13 +171,14 @@
       .on("click", click)
       .call(force.drag);
 
-    inside.append("svg:circle")
+    var circles = inside.append("svg:circle")
       .attr("r", nodeRad)
       .style("fill", "#555")
       .style("stroke", "#FFF")
       .style("stroke-width", 3);
 
-    inside.append("text")
+    var labels = inside.append("text")
+        .attr('class', 'labels')
         .attr('dx', '10')
         .attr('text-anchor', 'start')
         .attr("dy", ".35em")
@@ -182,6 +190,30 @@
         });
   }
 
+  function partyList(){
+    // var sorted = linkData.sort(function (a, b) { return a.individualValue - b.individualValue; });
+    nodeData.forEach(function (d) {
+      linkData.forEach(function (c) {
+        if (d.name === c.target.name) {
+          d.rank = c.individualValue;
+        };
+      })
+    })
+
+    force
+        .nodes(nodeData)
+        .links(linkData)
+        .start();
+
+    link = link.data(activeLink ? linkData : []);
+
+    // remove anything not in the data anymore
+    link.exit().remove();
+
+    d3.selectAll('.labels')
+      .transition().text(function(d) { return d.rank + ' ' + d.name.replace(/ Party.*/, '')});
+  }
+
   function click(d){
     if (d3.event.defaultPrevented) return; // ignore drag
     if (activeLink === d.index){
@@ -189,7 +221,7 @@
       return mutual();
     }
     activeLink = d.index;
-    // rearrange links to be alphabetical distance
+
     var partyLinks = [];
     json.links.forEach(function(link){
       var targetName;
@@ -197,9 +229,8 @@
         partyLinks.push(link);
       }
     });
-
     linkData = partyLinks;
-    update();
+    partyList();
   }
 
   $('#state').on('change', loadState);
