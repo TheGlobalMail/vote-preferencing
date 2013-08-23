@@ -257,12 +257,12 @@ module.exports = function(grunt) {
     cdn: {
       dist: {
         src: ['<%= project.dist %>/index.html'],
-        cdn: 'http://newproject-assets.theglobalmail.org'
+        cdn: 'http://preferences-assets.theglobalmail.org'
       },
 
       staging: {
         src: ['<%= cdn.dist.src %>'],
-        cdn: 'http://newproject-staging-assets.theglobalmail.org'
+        cdn: 'http://preferences-staging-assets.theglobalmail.org'
       }
     },
 
@@ -344,6 +344,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', function(target) {
     // Build and deploy
+    throw 'use s3/cloudfiles!';
 
     var tasks = [
       'build'
