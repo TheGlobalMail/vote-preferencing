@@ -1,0 +1,12 @@
+{
+  "name": "tgm-vote-preferencing",
+  "dependencies": {
+    "jquery": "~2.0.2",
+    "backbone": "~1.0.0",
+    "tgm-bootstrap": "git@github.com:TheGlobalMail/tgm-bootstrap.git#0.3.2",
+    "bootstrap": "2.3.0",
+    "requirejs": "~2.1.6",
+    "requirejs-plugins": "~1.0.2",
+    "lodash": "~1.3.1"
+  }
+}
