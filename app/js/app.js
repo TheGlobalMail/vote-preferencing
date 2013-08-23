@@ -82,7 +82,7 @@
   }
 
   function loadState(){
-    var state = $('#state').val();
+    var state = $('#state').val().toLowerCase();
     var $loading = $('#loading');
     $loading.show();
     d3.json("/data/" + state + ".json", function(error, data) {
