@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-  var width = 800,
-      height = 800,
+  var width = 1200,
+      height = 600,
       nodeRad = 10;
 
   var json;

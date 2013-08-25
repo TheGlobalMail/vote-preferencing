@@ -247,6 +247,7 @@ module.exports = function(grunt) {
           src: [
             'index.html',
             'data/*',
+            'components/aight/aight.min.js',
             '*.{ico,txt}',
             '.htaccess'
           ]
