@@ -61,29 +61,32 @@
       <p class="chromeframe lead" id="ie8-or-less-message">Unfortunately, you are using an outdated browser! The Global Mail's visualisations require a more current version. Please Google Chrome, Firefox, Opera, Safari or any other standards compliant browser or <a href="http://browsehappy.com/">upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
 
-    <div class="container">
+    <div id="visualisation"></div>
 
-      <form>
-        <fieldset>
-          <label>Choose state</label>
-          <select id="state">
-            <option>ACT</option>
-            <option>QLD</option>
-            <option selected="selected">NSW</option>
-            <option>NT</option>
-            <option>SA</option>
-            <option>TAS</option>
-            <option>VIC</option>
-            <option>WA</option>
-          </select>
-          <span id="loading">loading..</span>
-        </fieldset>
-      </form>
+    <div id="info" class="container">
 
-      <div class="row">
-        <div id="visualisation"></div>
-      </div>
+      <h1>WHO IS ATTRACTED TO WHOM?</h1>
+
+      <p>If you vote ‘above the line’ in the senate, the party you’ve chosen automatically selects a preference for all the other parties ‘below the line’. Our chart shows if each party’s preferences are similar to another party. If they’re close, they’re likely to mutually preference each other. If they’re distant, they’ve put each other at the end of their preference list. </p>
+
     </div>
+
+    <form>
+      <fieldset>
+        <label>Choose state</label>
+        <select id="state">
+          <option>ACT</option>
+          <option>QLD</option>
+          <option selected="selected">NSW</option>
+          <option>NT</option>
+          <option>SA</option>
+          <option>TAS</option>
+          <option>VIC</option>
+          <option>WA</option>
+        </select>
+        <span id="loading">loading..</span>
+      </fieldset>
+    </form>
 
   </div>
 
@@ -102,7 +105,7 @@
     </div>
   </footer>
 
-  <!--[if gte IE 9]> -->
+  <!--[if gte IE 9] -->
 
   <!-- build:js /js/main.js -->
   <script src="/components/jquery/jquery.js"></script>
@@ -112,7 +115,7 @@
   <script src="/js/app.js"></script>
   <!-- endbuild -->
 
-  <![endif]-->
+  <!-- <![endif]-->
 
   <script type="text/javascript">
   var _gaq = _gaq || [];

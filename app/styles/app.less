@@ -7,6 +7,49 @@
   font-size: 12px;
 }
 
+#visualisation svg{
+
+  .text-background{
+    fill: white;
+  }
+
+  circle{
+    fill: #555;
+    stroke: #FFF;
+    stroke-width: 3;
+
+    &.greens{
+      fill: #10C25B;
+    }
+    &.alp{
+      fill: #DC241f;
+    }
+    &.coalition{
+      fill: darkblue;
+    }
+  }
+}
+
+#info{
+  position: absolute;
+  z-index: -1;
+  top: 100px;
+  left: 100px;
+
+  p{
+    width: 40%;
+  }
+
+}
+
+form{
+  display: block;
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  z-index: 200;
+}
+
 //FOOTER
 
 footer {
