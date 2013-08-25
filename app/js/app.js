@@ -21,15 +21,21 @@
 
     var scaleFactor = _.min([height, width]) / 90;
 
+    // method to pull things to front of stage
+    d3.selection.prototype.moveToFront = function() {
+        return this.each(function() { this.parentNode.appendChild(this);});
+    };
+
     var force = d3.layout.force()
-        .gravity(0.05)
+        .gravity(0.02)
+        .friction(0.95)
         .distance(function(d){
-          var distance = activeLink ? d.individualValue * scaleFactor : d.mutualValue * (scaleFactor * 0.8);
+          var distance = activeLink ? d.individualValue * scaleFactor : d.mutualValue * (scaleFactor * 0.9);
           distance = distance * scaleFactorForState(state);
           return distance;
         })
         .charge(function(d){
-          return -1 * Math.pow(2.2, activeLink ? d.individualValue : d.mutualValue);
+          return -3 * Math.pow(2, activeLink ? d.individualValue : d.mutualValue);
         })
         .size([width, height])
         .on("tick", tick);
@@ -107,9 +113,13 @@
       var labels = d3.selectAll('.labels');
 
       if (labels[0].length > 0) {
-        d3.selectAll('.labels').transition()
+        labels.transition()
           .text(function(d) { return d.name.replace(/ Party.*/, '')});
       };
+
+      var nodes = d3.selectAll('.node');
+      nodes.selectAll('circle').attr('r', nodeRad);
+      nodes.selectAll('text').style('font-size', '10px').attr('dx', '12');
 
       init();
     }
@@ -142,6 +152,9 @@
         .attr("class", "node")
         .attr("pointer-events", "all")
         .on("click", click)
+        .on('mouseover', function() {
+            d3.select(this).moveToFront();
+        })
         .call(force.drag);
 
       inside.append("svg:circle")
@@ -161,17 +174,28 @@
           .attr('y', '-0.6em')
           .attr('x', '10')
           .attr('width', function(d){
-            return displayName(d).length * 0.6 + 'em';
+            return displayName(d).length * 0.55 + 'em';
           })
           .attr('height', '1.2em');
 
       inside.append("text")
           .attr('class', 'labels')
-          .attr('dx', '10')
+          .attr('dx', '12')
           .attr('text-anchor', 'start')
           .attr("dy", ".35em")
-          .attr("pointer-events", "none")
+          .on('mouseover', labelRollover)
+          .on('mouseout', function() {
+            d3.selectAll('.labels').transition()
+              .style('fill-opacity', 0.8)})
           .text(displayName);
+          // .attr("pointer-events", "none")
+    }
+
+    function labelRollover() {
+      var selected = this;
+      d3.selectAll('.labels').transition().style('fill-opacity',function () {
+        return (this === selected) ? 1.0 : 0.8;
+      });
     }
 
     function displayName(node){
@@ -180,7 +204,7 @@
       return label;
     }
 
-    function partyList(){
+    function partyList(clicked){
       // var sorted = linkData.sort(function (a, b) { return a.individualValue - b.individualValue; });
       var source = data.nodes[activeLink];
       source.rank = null;
@@ -202,6 +226,9 @@
         .transition().text(function(d) {
           return (d.rank ? d.rank + '. ' : '') + d.name.replace(/ Party.*/, '');
         });
+
+      // clicked.transition()
+      //   .attr('transform', 'translate(' + width / 2 + ',' + 20 + ')')
     }
 
     function click(d){
@@ -212,6 +239,35 @@
       }
       activeLink = d.index;
 
+      var selected = this;
+
+      d3.selectAll('.node')
+        .each(function () {
+          var group = d3.select(this);
+          if (this === selected) {
+            group.select('circle').transition()
+              .delay(800).duration(600)
+              .attr('r', nodeRad + 6);
+          } else {
+            group.select('circle').attr('r', nodeRad / 2);
+          }
+        });
+
+      d3.selectAll('.node')
+        .each(function () {
+          var group = d3.select(this);
+          if (this === selected) {
+            group.select('text').transition()
+              .delay(800).duration(600)
+              .attr('dx', '15')
+              .style('font-size', '14px');
+          } else {
+            group.select('text')
+              .attr('dx', '12')
+              .style('font-size', '10px');
+          }
+        });
+
       var partyLinks = [];
       data.links.forEach(function(link){
         var targetName;
@@ -220,7 +276,7 @@
         }
       });
       linkData = partyLinks;
-      partyList();
+      partyList(d3.select(this));
     }
 
     function tick(){
@@ -242,7 +298,23 @@
       //  .attr("cy", function(d) { return d.y;  });
 
       node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, d.y)) + ")";  });
+
+      // node.each(function(d, i) {
+      //     var b = this.childNodes[1].getBBox();
+
+      //     var diffX = d.x - d.node.x;
+      //     var diffY = d.y - d.node.y;
+
+      //     var dist = Math.sqrt(diffX * diffX + diffY * diffY);
+
+      //     var shiftX = b.width * (diffX - dist) / (dist * 2);
+      //     shiftX = Math.max(-b.width, Math.min(0, shiftX));
+      //     var shiftY = 5;
+      //     this.childNodes[1].setAttribute("transform", "translate(" + shiftX + "," + shiftY + ")");
+      //   }
+      //   });
     }
+
 
     function collide(node) {
       var r,
