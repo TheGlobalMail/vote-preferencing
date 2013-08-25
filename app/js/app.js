@@ -192,13 +192,13 @@
 
   function partyList(){
     // var sorted = linkData.sort(function (a, b) { return a.individualValue - b.individualValue; });
-    nodeData.forEach(function (d) {
-      linkData.forEach(function (c) {
-        if (d.name === c.target.name) {
-          d.rank = c.individualValue;
-        };
-      })
-    })
+    console.error('activelink: ' + activeLink)
+    var source = json.nodes[activeLink];
+    source.rank = null;
+    linkData.forEach(function (l) {
+      console.error(l)
+      l.target.rank = l.individualValue;
+    });
 
     force
         .nodes(nodeData)
@@ -211,7 +211,9 @@
     link.exit().remove();
 
     d3.selectAll('.labels')
-      .transition().text(function(d) { return d.rank + ' ' + d.name.replace(/ Party.*/, '')});
+      .transition().text(function(d) {
+        return (d.rank ? d.rank + '. ' : '') + d.name.replace(/ Party.*/, '');
+      });
   }
 
   function click(d){
