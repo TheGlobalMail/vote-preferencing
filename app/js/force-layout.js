@@ -33,8 +33,8 @@ define([
     // a party is selected or not and the preferences between the parties
     var force = d3.layout.force()
         .gravity(0.5)
-        .distance(function(d){
-          return (preferences.selectedParty ? d.individualValue : d.mutualValue) * scaleFactor();
+        .distance(function(d, i){
+          return (preferences.selectedParty ? i * 3 : d.mutualValue) * scaleFactor();
         })
         .charge(function(d){
           return -2 * Math.pow(2, preferences.selectedParty ? d.individualValue : d.mutualValue);
@@ -176,9 +176,12 @@ define([
     function partyList(){
       var source = preferences.parties[preferences.selectedParty];
       source.rank = null;
+
       linkData.forEach(function (l) {
         l.target.rank = l.individualValue;
       });
+
+      linkData.sort(function(a, b) { return a.individualValue - b.individualValue; });
 
       force
           .nodes(nodeData)
@@ -236,10 +239,12 @@ define([
       // change center of gravity on click
 
       node.attr('transform', function(d) {
-        var topNodeY = 20;
+        // hard Y val for selected node
+        var topNodeY = 30;
 
         if (preferences.selectedParty) {
           d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
+          console.log(d3.select('.selectedNode')[0][0].__data__.y)
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
           var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
