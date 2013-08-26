@@ -51,8 +51,13 @@ define([
 
     // Loads the state data based the state control
     changeState = function(){
+      $('#reset-link').css('display', 'none');
       startMutualLayout();
     };
+
+    $('#reset-link').click(function() {
+        changeState();
+    });
 
     // Returns a scale factor based on the dimensions and the current state
     function scaleFactor(){
@@ -192,7 +197,7 @@ define([
 
       d3.selectAll('.labels')
         .transition().text(function(d) {
-          return d.name.replace(/ Party.*/, '') + (d.rank ? ' (' + d.rank + ')' : ' (reset)') ;
+          return d.name.replace(/ Party.*/, '') + (d.rank ? ' (' + d.rank + ')' : '') ;
         });
     }
 
@@ -204,6 +209,7 @@ define([
       }
       preferences.selectedParty = d.index;
 
+      $('#reset-link').css('display', 'inline-block');
       // update some visuals on click
       var selected = this;
       d3.selectAll('.node')
@@ -250,7 +256,7 @@ define([
           var onscreenY = Math.max(nodeRad * 2, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
         } else {
-          var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
+          var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad - 150, d.x));
           var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, d.y));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
         };

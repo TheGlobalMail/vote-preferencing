@@ -44,7 +44,7 @@ body {
   }
   form {
     display: inline-block;
-    margin: 0; 
+    margin: 0;
   }
   label {
     display: inline-block;
@@ -86,6 +86,9 @@ body {
 
 .special-feature-links {
   line-height: 1.2;
+  #reset-link {
+    display: none;
+  }
 }
 
 
@@ -111,12 +114,12 @@ body {
     }
 
     &:hover {
-      cursor: pointer;     
+      cursor: pointer;
     }
 
     &.selectedNode {
       text {
-        font-size: 16px;        
+        font-size: 16px;
       }
       .labels {
         fill: @black;
@@ -274,7 +277,7 @@ footer {
 }
 
 .modal {
-  background: @grayDarker;  
+  background: @grayDarker;
   color: @grayLighter;
   .border-radius(10px);
   border: 0 none;
@@ -310,8 +313,8 @@ footer {
   }
 
   .modal-footer {
-    background: @grayDarker; 
-    border-top: 1px solid black; 
+    background: @grayDarker;
+    border-top: 1px solid black;
   }
 
 }
@@ -321,8 +324,8 @@ footer {
   .tgm {
     width: 240px;
     text-indent: -9000px;
-    background: transparent url(/images/footer-logo.png) 0 0 no-repeat;   
-    display: block; 
+    background: transparent url(/images/footer-logo.png) 0 0 no-repeat;
+    display: block;
   }
   list-style: none;
   line-height: 1.6;
