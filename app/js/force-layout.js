@@ -51,7 +51,6 @@ define([
 
     // Loads the state data based the state control
     changeState = function(){
-      $('#reset-link').css('display', 'none');
       startMutualLayout();
     };
 
@@ -83,6 +82,8 @@ define([
 
       node.remove();
       link.remove();
+
+      $('#reset-link').css('display', 'none');
       preferences.selectedParty = null;
 
       nodeData = preferences.parties;
