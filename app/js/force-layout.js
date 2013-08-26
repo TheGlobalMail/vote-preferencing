@@ -125,9 +125,6 @@ define([
       var inside = nodeEnter.append("g")
         .attr("class", "node")
         .attr("pointer-events", "all")
-        .on('mouseover', function() {
-          d3.select(this).moveToFront();
-        })
         .on("click", click)
         .call(force.drag);
 
