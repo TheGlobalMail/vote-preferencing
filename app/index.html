@@ -37,11 +37,51 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
   <header class="navbar special-feature" role="banner">
-    <a href="http://www.theglobalmail.org/" class="brand brand-center" title="Go to The Global Mail">The Global Mail</a>
 
+    <!-- masthead -->
+    <a href="http://www.theglobalmail.org/" class="brand" title="Go to The Global Mail">The Global Mail</a>
+
+    <!-- title + dropdown -->
+    <div class="article-title-container">
+      <h1 class="article-title">
+        Who is attracted to whom
+      </h1>
+    <form>
+      <fieldset>
+        <label>&hellip;in</label>
+        <div class="select-wrapper"> 
+          <select id="state">
+            <option>ACT</option>
+            <option>QLD</option>
+            <option selected="selected">NSW</option>
+            <option>NT</option>
+            <option>SA</option>
+            <option>TAS</option>
+            <option>VIC</option>
+            <option>WA</option>
+          </select>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+    <!-- about + social buttons -->
     <div class="special-feature-misc">
       <div class="special-feature-links">
-        <!--<a href="#about-modal" data-toggle="modal" data-bypass>About</a>-->
+        <a href="#about-modal" data-toggle="modal" data-bypass>About</a>
+      </div>
+
+      <div id="about-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="about-modal-label" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="about-modal-label">Who is attracted to whom?</h3>
+        </div>
+        <div class="modal-body">
+          <p>If you vote ‘above the line’ in the senate, the party you’ve chosen automatically selects a preference for all the other parties ‘below the line’. Our chart shows if each party’s preferences are similar to another party. If they’re close, they’re likely to mutually preference each other. If they’re distant, they’ve put each other at the end of their preference list. </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
       </div>
 
       <div class="share-button twitter">
@@ -56,37 +96,13 @@
   </header>
 
   <div id="main" role="main">
-
     <!--[if lt IE 9]>
       <p class="chromeframe lead" id="ie8-or-less-message">Unfortunately, you are using an outdated browser! The Global Mail's visualisations require a more current version. Please Google Chrome, Firefox, Opera, Safari or any other standards compliant browser or <a href="http://browsehappy.com/">upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
 
-    <div id="info" class="container">
-
-      <h2>WHO IS ATTRACTED TO WHOM?</h2>
-
-      <p>If you vote ‘above the line’ in the senate, the party you’ve chosen automatically selects a preference for all the other parties ‘below the line’. Our chart shows if each party’s preferences are similar to another party. If they’re close, they’re likely to mutually preference each other. If they’re distant, they’ve put each other at the end of their preference list. </p>
-
-      <form>
-      <fieldset>
-        <label>Choose state</label>
-        <select id="state">
-          <option>ACT</option>
-          <option>QLD</option>
-          <option selected="selected">NSW</option>
-          <option>NT</option>
-          <option>SA</option>
-          <option>TAS</option>
-          <option>VIC</option>
-          <option>WA</option>
-        </select>
-        <span id="loading">loading..</span>
-      </fieldset>
-      </form>
-    </div>
+    <span id="loading">loading..</span>
 
     <div id="visualisation"></div>
-
   </div>
 
   <footer id="footer">

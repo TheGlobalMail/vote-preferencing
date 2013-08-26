@@ -47,9 +47,6 @@ define([
 
     // Loads the state data based the state control
     changeState = function(){
-      force.stop();
-      node.remove();
-      link.remove();
       startMutualLayout();
     };
 
@@ -73,6 +70,11 @@ define([
 
     // Start the layout with forces based on mutual preferences
     function startMutualLayout(){
+      force.stop();
+
+      node.remove();
+      link.remove();
+
       nodeData = preferences.parties;
       linkData = preferences.preferences;
 
@@ -185,7 +187,7 @@ define([
 
       d3.selectAll('.labels')
         .transition().text(function(d) {
-          return (d.rank ? d.rank + '. ' : '') + d.name.replace(/ Party.*/, '');
+          return d.name.replace(/ Party.*/, '') + (d.rank ? ' (' + d.rank + ')' : '') ;
         });
     }
 

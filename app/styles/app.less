@@ -1,3 +1,56 @@
+@liberalColor:    rgb(2, 78, 166);
+@nationalsColor:  rgb(200, 200, 0);
+@laborColor:      rgb(171, 21, 15);
+@greensColor:     rgb(26, 164, 21);
+
+@grayDark:        rgb(51, 51, 51);
+@gray:            rgb(153, 153, 153);
+@grayLighter:     rgb(246,246,246);
+@white:           rgb(255,255,255);
+
+html {
+}
+
+body {
+  background: @grayLighter;
+}
+
+.navbar.special-feature {
+  .brand {
+    width: 190px;
+    background-position: left center;
+  }
+  .clearfix;
+}
+
+.article-title-container {
+  display: block;
+  width: 700px;
+  margin: 0 auto;
+  position: relative;
+  h1 {
+    font-family: @sansFontFamily;
+  .font-size(20);
+    color: @white;
+    font-weight: 100;
+    text-transform: uppercase;
+    display: inline-block;
+  }
+  form {
+    display: inline-block;
+  }
+  label {
+    display: inline-block;
+    color: @white;
+  }
+  .select-wrapper {
+    display: inline-block;
+    width: 80px;
+    overflow: hidden;
+    color: @white;
+  }
+}
+
 .node:hover{
   cursor: pointer;
 }
@@ -10,23 +63,23 @@
 #visualisation svg{
 
   .text-background{
-    fill: white;
+    fill: @grayLighter;
     fill-opacity: 0.8;
   }
 
   circle{
-    fill: #8a8a8a;
-    stroke: #FFF;
+    fill: @gray;
+    stroke: @grayLighter;
     stroke-width: 3;
 
     &.greens{
-      fill: #10C25B;
+      fill: @greensColor;
     }
     &.alp{
-      fill: #DC241f;
+      fill: @laborColor;
     }
     &.coalition{
-      fill: #323de2;
+      fill: @liberalColor;
     }
   }
 }

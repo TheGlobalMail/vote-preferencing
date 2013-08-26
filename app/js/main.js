@@ -3,7 +3,8 @@ require.config({
     jquery: '../components/jquery/jquery',
     backbone: '../components/backbone/backbone',
     lodash: '../components/lodash/lodash',
-    d3: '../components/d3/d3'
+    d3: '../components/d3/d3',
+    bootstrapmodal: '../components/bootstrap/js/bootstrap-modal'
   },
   shim: {
     d3: {
