@@ -1,7 +1,8 @@
 define([
   'jquery',
+  'lodash',
   './force-layout'
-], function($, layout) {
+], function($, _, layout) {
 
   return {
     // Restart the layout after resize
@@ -9,7 +10,10 @@ define([
       var resizeTimer;
       $(window).resize(function(){
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(layout.start, 1000);
+        resizeTimer = setTimeout(function(){
+          layout.init();
+          layout.changeState();
+        }, 1000);
       });
     }
   };
