@@ -54,8 +54,9 @@ define([
       startMutualLayout();
     };
 
-    $('#reset-link').click(function() {
+    $('#reset-link').click(function(e) {
         changeState();
+        e.preventDefault();
     });
 
     // Returns a scale factor based on the dimensions and the current state
