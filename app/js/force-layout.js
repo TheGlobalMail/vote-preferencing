@@ -140,7 +140,7 @@ define([
       var rect = inside.append('rect')
           .attr('class', 'text-background')
           .attr('y', '-0.6em')
-          .attr('x', '10')
+          .attr('x', nodeRad * 1.2)
           .attr('width', function(d){
             return displayName(d).length * 0.6 + 'em';
           })
