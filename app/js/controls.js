@@ -5,7 +5,10 @@ define([
 
   return {
     init: function(){
-      $('#state').on('change', layout.start);
+      $('#state').on('change', function(e) {
+        e.preventDefault();
+        layout.start();
+    });
     }
   };
 

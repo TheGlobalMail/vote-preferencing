@@ -3,18 +3,19 @@
 }
 
 .node text {
-  pointer-events: none;
-  font-size: 12px;
+  // pointer-events: none;
+  font-size: 10px;
 }
 
 #visualisation svg{
 
   .text-background{
     fill: white;
+    fill-opacity: 0.8;
   }
 
   circle{
-    fill: #555;
+    fill: #8a8a8a;
     stroke: #FFF;
     stroke-width: 3;
 
@@ -25,29 +26,33 @@
       fill: #DC241f;
     }
     &.coalition{
-      fill: darkblue;
+      fill: #323de2;
     }
   }
 }
 
 #info{
-  position: absolute;
-  z-index: -1;
-  top: 100px;
-  left: 100px;
+  position: relative;
+  // z-index: -1;
+  width: 100%;
+  text-align: center;
+  // top: 100px;
+  // left: 100px;
 
   p{
-    width: 40%;
+    width: 70%;
+    margin: 0 auto;
   }
 
 }
 
 form{
   display: block;
-  position: absolute;
-  top: 100px;
-  right: 50px;
+  position: relative;
+  // top: 100px;
+  // right: 50px;
   z-index: 200;
+  margin: 10px 0 0 0;
 }
 
 //FOOTER

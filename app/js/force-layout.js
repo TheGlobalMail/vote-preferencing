@@ -14,14 +14,19 @@ define([
     resizeTimer = setTimeout(start, 1000);
   });
 
+  // method to pull things to front of stage
+  d3.selection.prototype.moveToFront = function() {
+    return this.each(function() { this.parentNode.appendChild(this);});
+  };
+
   function start(){
 
     // Clear the svg to start with
     $('#visualisation svg').remove();
 
     // Scale the svg to the size of viewport
-    var width = $(window).width(),
-        height = $(window).height() - 150,
+    var width = $(window).width()- 20,
+        height = $(window).height() - 160,
         nodeRad = 10,
         minDimension = _.min([width, height]),
         svg = d3.select('#visualisation').append('svg')
@@ -34,12 +39,13 @@ define([
     // Start the force layout. Scale the distance and charge based on whether
     // a party is selected or not and the preferences between the parties
     var force = d3.layout.force()
-        .gravity(0.05)
+        .gravity(0.02)
+        .friction(0.95)
         .distance(function(d){
           return (preferences.selectedParty ? d.individualValue  : d.mutualValue) * scaleFactor();
         })
         .charge(function(d){
-          return -1 * Math.pow(2.2, preferences.selectedParty ? d.individualValue : d.mutualValue);
+          return -3 * Math.pow(2, preferences.selectedParty ? d.individualValue : d.mutualValue);
         })
         .size([width, height])
         .on('tick', tick);
@@ -96,6 +102,10 @@ define([
           .text(function(d) { return d.name.replace(/ Party.*/, ''); });
       }
 
+      var nodes = d3.selectAll('.node');
+      nodes.selectAll('circle').attr('r', nodeRad);
+      nodes.selectAll('text').style('font-size', '10px').attr('dx', '12');
+
       init();
     }
 
@@ -126,6 +136,9 @@ define([
       var inside = nodeEnter.append("g")
         .attr("class", "node")
         .attr("pointer-events", "all")
+        .on('mouseover', function() {
+          d3.select(this).moveToFront();
+        })
         .on("click", click)
         .call(force.drag);
 
@@ -152,11 +165,22 @@ define([
 
       inside.append("text")
           .attr('class', 'labels')
-          .attr('dx', '10')
+          .attr('dx', '12')
           .attr('text-anchor', 'start')
           .attr("dy", ".35em")
-          .attr("pointer-events", "none")
+          .on('mouseover', labelRollover)
+          .on('mouseout', function() {
+            d3.selectAll('.labels').transition()
+              .style('fill-opacity', 0.8)
+            })
           .text(displayName);
+    }
+
+    function labelRollover() {
+      var selected = this;
+      d3.selectAll('.labels').transition().style('fill-opacity',function () {
+        return (this === selected) ? 1.0 : 0.8;
+      });
     }
 
     function displayName(node){
@@ -190,6 +214,35 @@ define([
         return startMutualLayout();
       }
       preferences.selectedParty = d.index;
+
+      var selected = this;
+
+      d3.selectAll('.node')
+        .each(function () {
+          var group = d3.select(this);
+          if (this === selected) {
+            group.select('circle').transition()
+              .delay(800).duration(600)
+              .attr('r', nodeRad + 6);
+          } else {
+            group.select('circle').attr('r', nodeRad / 2);
+          }
+        });
+
+      d3.selectAll('.node')
+        .each(function () {
+          var group = d3.select(this);
+          if (this === selected) {
+            group.select('text').transition()
+              .delay(800).duration(600)
+              .attr('dx', '15')
+              .style('font-size', '14px');
+          } else {
+            group.select('text')
+              .attr('dx', '12')
+              .style('font-size', '10px');
+          }
+        });
 
       var partyLinks = [];
       _.each(preferences.preferences, function(link){
