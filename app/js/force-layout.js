@@ -62,7 +62,7 @@ define([
     // Returns a scale factor based on the dimensions and the current state
     function scaleFactor(){
       // scale by the minimum dimension
-      var scale = minDimension / 90;
+      var scale = minDimension / 100;
       // Scale by state XXX refactor to scale based on number of parties
       var state = preferences.selectedState;
       if (_(['wa', 'sa']).contains(state)){
