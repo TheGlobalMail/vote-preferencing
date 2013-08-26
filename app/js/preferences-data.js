@@ -52,7 +52,7 @@ define([
         delete preferenceData.Party;
         delete preferenceData[name];
         _.each(preferenceData, function(score, target){
-          var scoreF = parseFloat(score);
+          var scoreF = parseFloat(score) + 1;
           preferences.preferences.push({
             source: index,
             target: preferences.partyIndex[target],

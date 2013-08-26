@@ -18,9 +18,13 @@ define([
     // Clear the svg to start with
     $('#visualisation svg').remove();
 
+    if (location.search.indexOf('celestial') !== -1){
+      $('#visualisation').addClass('celestial');
+    }
+
     // Scale the svg to the size of viewport
     var width = $(window).width(),
-        height = $(window).height() - 160,
+        height = $(window).height(),
         nodeRad = 15,
         minDimension = _.min([width, height]),
         svg = d3.select('#visualisation').append('svg')
