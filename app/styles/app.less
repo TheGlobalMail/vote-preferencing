@@ -3,17 +3,18 @@
 @laborColor:      rgb(171, 21, 15);
 @greensColor:     rgb(26, 164, 21);
 
+@black:           rgb(10,10,10);
 @grayDarker:      rgb(30, 30, 30);
 @grayDark:        rgb(51, 51, 51);
 @gray:            rgb(153, 153, 153);
 @grayLighter:     rgb(246,246,246);
+@grayLightest:    rgb(250,250,250);
 @white:           rgb(255,255,255);
 
-html {
-}
-
 body {
-  background: @grayLighter;
+  background: @grayLightest;
+  #gradient > .vertical(@grayLightest, @grayLighter);
+  .font-size(16);
 }
 
 .navbar.special-feature {
@@ -52,25 +53,45 @@ body {
   }
 }
 
-.node:hover{
-  cursor: pointer;
-}
-
-.node text {
-  // pointer-events: none;
-  font-size: 10px;
-}
-
 #visualisation svg{
 
+  .node {
+
+    text {
+      font-size: 14px;
+      font-family: @baseFontFamily;
+      font-weight: 400;
+      transition: font-size .5s ease
+    }
+
+    &:hover {
+      cursor: pointer;     
+    }
+
+    &.selectedNode {
+      text {
+        font-size: 16px;        
+      }
+      .labels {
+        fill: @black;
+      }
+    }
+
+  }
+
+
   .text-background{
-    fill: @grayLighter;
+    fill: @grayLightest;
     fill-opacity: 0.8;
+  }
+
+  .labels {
+    fill: @grayDarker;
   }
 
   circle{
     fill: @gray;
-    stroke: @grayLighter;
+    stroke: @grayLightest;
     stroke-width: 3;
 
     &.greens{
@@ -206,9 +227,9 @@ footer {
   }
 }
 
-
 .modal {
   background: @grayDarker;  
+  color: @grayLighter;
 }
 
 .modal-footer {

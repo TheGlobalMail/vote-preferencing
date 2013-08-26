@@ -88,7 +88,7 @@ define([
       // Set the circles to the default size
       var nodes = d3.selectAll('.node');
       nodes.selectAll('circle').attr('r', nodeRad);
-      nodes.selectAll('text').style('font-size', '10px').attr('dx', nodeRad * 1.2);
+      nodes.selectAll('text').attr('dx', nodeRad * 1.2);
 
       startForceLayout();
     }
@@ -209,13 +209,13 @@ define([
           var group = d3.select(this);
           if (this === selected) {
             group.select('circle').transition().delay(800).duration(600).attr('r', nodeRad + 6);
-            group.select('text').attr('dx', nodeRad * 1.5).style('font-size', '16px');
+            group.select('text').attr('dx', nodeRad * 1.5);
             group.select('rect').attr('x', nodeRad * 1.5);
             group.classed('selectedNode', true);
 
           } else {
             group.select('circle').attr('r', nodeRad / 2);
-            group.select('text').attr('dx', nodeRad * 1.2).style('font-size', '10px');
+            group.select('text').attr('dx', nodeRad * 1.2);
             group.select('rect').attr('x', nodeRad * 1.2);
             group.classed('selectedNode', false);
           }
