@@ -1,7 +1,8 @@
 define([
   'jquery',
   './force-layout',
-  './controls'
+  './controls',
+  'bootstrapmodal'
 ], function($, layout, controls) {
   'use strict';
 
