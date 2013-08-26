@@ -24,6 +24,7 @@ body {
   .brand {
     width: 190px;
     background-position: left center;
+    background-size: auto; 
   }
   .clearfix;
 }
@@ -35,7 +36,7 @@ body {
   position: relative;
   h1 {
     font-family: @sansFontFamily;
-    .font-size(22);
+    .font-size(20);
     color: @lemon;
     margin: 0;
     line-height: 1;
@@ -52,12 +53,11 @@ body {
     .font-size(20);
     margin: 0;
     margin-left: 8px;
-    line-height: 30px;
     padding-top: 5px;
   }
   .select-wrapper {
     display: inline-block;
-    width: 100px;
+    width: 80px;
     overflow: hidden;
     position: relative;
     vertical-align: top;
@@ -66,17 +66,20 @@ body {
     .border-radius(4px);
     select {
       outline: none;
-      width: 100px;
-      .font-size(22);
-      line-height: 1;
-      height: 30px;
+      width: 80px;
+      .font-size(14);
+      line-height: 16px;
+      height: 20px;
       margin: 0;
       padding: 0 4px;
       color: @grayDarker;
-      font-weight: 700;
+      font-weight: 400;
       border: 0px none;
       .border-radius(0);
-      opacity: 0.5;
+      opacity: 0.6;
+      // appearance: none;
+      // -webkit-appearance: none;
+      // -moz-appearance: none;
       &:hover {
         opacity: 1;
       }
@@ -338,4 +341,19 @@ footer {
 
 .navbar{
   margin-bottom: 0;
+}
+
+
+@media screen and (max-width: 1200px) {
+  .article-title-container {
+    float: left;
+    width: auto;
+    margin-left: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .share-button {
+    display: none !important;
+  }
 }
