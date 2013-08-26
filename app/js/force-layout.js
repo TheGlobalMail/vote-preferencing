@@ -32,13 +32,12 @@ define([
     // Start the force layout. Scale the distance and charge based on whether
     // a party is selected or not and the preferences between the parties
     var force = d3.layout.force()
-        .gravity(0.02)
-        .friction(0.95)
+        .gravity(0.5)
         .distance(function(d){
-          return (preferences.selectedParty ? d.individualValue  : d.mutualValue) * scaleFactor();
+          return (preferences.selectedParty ? d.individualValue : d.mutualValue) * scaleFactor();
         })
         .charge(function(d){
-          return -3 * Math.pow(2, preferences.selectedParty ? d.individualValue : d.mutualValue);
+          return -2 * Math.pow(2, preferences.selectedParty ? d.individualValue : d.mutualValue);
         })
         .size([width, height])
         .on('tick', tick);
@@ -207,11 +206,13 @@ define([
             group.select('circle').transition().delay(800).duration(600).attr('r', nodeRad + 6);
             group.select('text').attr('dx', nodeRad * 1.5).style('font-size', '16px');
             group.select('rect').attr('x', nodeRad * 1.5);
+            group.classed('selectedNode', true)
 
           } else {
             group.select('circle').attr('r', nodeRad / 2);
             group.select('text').attr('dx', nodeRad * 1.2).style('font-size', '10px');
             group.select('rect').attr('x', nodeRad * 1.2);
+            group.classed('selectedNode', false)
           }
         });
 
@@ -231,6 +232,7 @@ define([
     function tick(){
       collision.adjustForCollisions(node, nodeData);
       // change center of gravity on click
+
       node.attr('transform', function(d) {
         if (preferences.selectedParty) {
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
