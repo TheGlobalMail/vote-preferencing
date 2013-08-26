@@ -24,7 +24,7 @@ define([
 
     // Scale the svg to the size of viewport
     var width = $(window).innerWidth(),
-        height = $(window).innerHeight() - 32,
+        height = $(window).innerHeight() - 60,
         nodeRad = 15,
         minDimension = _.min([width, height]),
         svg = d3.select('#visualisation').append('svg')
@@ -131,6 +131,11 @@ define([
       var inside = nodeEnter.append("g")
         .attr("class", "node")
         .attr("pointer-events", "all")
+        .on('mouseover', function() {
+            if (!$('html').hasClass('ie')) {
+                d3.select(this).moveToFront();
+            };
+        })
         .on("click", click)
         .call(force.drag);
 
