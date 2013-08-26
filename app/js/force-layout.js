@@ -18,9 +18,13 @@ define([
     // Clear the svg to start with
     $('#visualisation svg').remove();
 
+    if (location.search.indexOf('celestial') !== -1){
+      $('#visualisation').addClass('celestial');
+    }
+
     // Scale the svg to the size of viewport
-    var width = $(window).width()- 20,
-        height = $(window).height() - 160,
+    var width = $(window).width(),
+        height = $(window).height(),
         nodeRad = 15,
         minDimension = _.min([width, height]),
         svg = d3.select('#visualisation').append('svg')
@@ -74,6 +78,7 @@ define([
 
       node.remove();
       link.remove();
+      preferences.selectedParty = null;
 
       nodeData = preferences.parties;
       linkData = preferences.preferences;
@@ -120,9 +125,6 @@ define([
       var inside = nodeEnter.append("g")
         .attr("class", "node")
         .attr("pointer-events", "all")
-        .on('mouseover', function() {
-          d3.select(this).moveToFront();
-        })
         .on("click", click)
         .call(force.drag);
 
@@ -240,13 +242,12 @@ define([
 
       node.attr('transform', function(d) {
         // hard Y val for selected node
-        var topNodeY = 30;
+        var topNodeY = 40;
 
         if (preferences.selectedParty) {
           d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
-          console.log(d3.select('.selectedNode')[0][0].__data__.y)
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
-          var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
+          var onscreenY = Math.max(nodeRad * 2, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
         } else {
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
