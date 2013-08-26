@@ -69,19 +69,7 @@
     <div class="special-feature-misc">
       <div class="special-feature-links">
         <a href="#about-modal" data-toggle="modal" data-bypass>About</a>
-      </div>
-
-      <div id="about-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="about-modal-label" aria-hidden="true">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="about-modal-label">Who is attracted to whom?</h3>
-        </div>
-        <div class="modal-body">
-          <p>If you vote ‘above the line’ in the senate, the party you’ve chosen automatically selects a preference for all the other parties ‘below the line’. Our chart shows if each party’s preferences are similar to another party. If they’re close, they’re likely to mutually preference each other. If they’re distant, they’ve put each other at the end of their preference list. </p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
-        </div>
+        <a href="#credits-modal" data-toggle="modal" data-bypass>Credits</a>
       </div>
 
       <div class="share-button twitter">
@@ -105,20 +93,38 @@
     <div id="visualisation"></div>
   </div>
 
-  <footer id="footer">
-    <div class="container">
-      <ul class="credit">
-        <li>
-          <ul>
-            <li><a target="_BLANK" href="http://www.theglobalmail.org" class="tgm" target="_blank">The Global Mail</a></li>
-            <li>Concept: Matthew Landauer</li>
-            <li>Interactive Developers: B.J. Rossiter, Nikhil Sonnad</li>
-            <li>Researcher: Clare Blumer</li>
-          </ul>
-        </li>
+  <!-- about modal -->
+  <div id="about-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="about-modal-label" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="about-modal-label">Who is attracted to whom?</h3>
+    </div>
+    <div class="modal-body">
+      <p>If you vote ‘above the line’ in the senate, the party you’ve chosen automatically selects a preference for all the other parties ‘below the line’. Our chart shows if each party’s preferences are similar to another party. If they’re close, they’re likely to mutually preference each other. If they’re distant, they’ve put each other at the end of their preference list. </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
+
+  <!-- credits modal -->
+  <div id="credits-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="credit-modal-label" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="credit-modal-label">Credits</h3>
+    </div>
+    <div class="modal-body">
+      <ul class="credits">
+        <li><a target="_BLANK" href="http://www.theglobalmail.org" class="tgm" target="_blank">The Global Mail</a></li>
+        <li>Concept: Matthew Landauer</li>
+        <li>Interactive Developers: B.J. Rossiter, Nikhil Sonnad</li>
+        <li>Researcher: Clare Blumer</li>
       </ul>
     </div>
-  </footer>
+    <div class="modal-footer">
+      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
 
   <!--[if gte IE 9] -->
 

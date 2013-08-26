@@ -3,6 +3,7 @@
 @laborColor:      rgb(171, 21, 15);
 @greensColor:     rgb(26, 164, 21);
 
+@grayDarker:      rgb(30, 30, 30);
 @grayDark:        rgb(51, 51, 51);
 @gray:            rgb(153, 153, 153);
 @grayLighter:     rgb(246,246,246);
@@ -202,5 +203,24 @@ footer {
       text-decoration: none;
       .opacity(60);
     }
+  }
+}
+
+
+.modal {
+  background: @grayDarker;  
+}
+
+.modal-footer {
+  background: @grayDarker; 
+  border-top: 1px solid black; 
+}
+
+.credits {
+  .tgm {
+    width: 240px;
+    text-indent: -9000px;
+    background: transparent url(/images/footer-logo.png) 0 0 no-repeat;   
+    display: block; 
   }
 }
