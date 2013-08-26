@@ -192,7 +192,7 @@ define([
 
       d3.selectAll('.labels')
         .transition().text(function(d) {
-          return d.name.replace(/ Party.*/, '') + (d.rank ? ' (' + d.rank + ')' : '') ;
+          return d.name.replace(/ Party.*/, '') + (d.rank ? ' (' + d.rank + ')' : ' (reset)') ;
         });
     }
 
@@ -238,12 +238,12 @@ define([
     // Adjust positions to keep on screen and minimise collisions
     function tick(e){
       collision.adjustForCollisions(node, nodeData);
-      // change center of gravity on click
 
       node.attr('transform', function(d) {
-        // hard Y val for selected node
+        // hard Y val for selected party node
         var topNodeY = 40;
 
+        // change center of gravity if in party state
         if (preferences.selectedParty) {
           d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad - 150, d.x));
