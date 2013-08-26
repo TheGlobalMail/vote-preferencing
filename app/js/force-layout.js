@@ -74,6 +74,7 @@ define([
 
       node.remove();
       link.remove();
+      preferences.selectedParty = null;
 
       nodeData = preferences.parties;
       linkData = preferences.preferences;
@@ -240,13 +241,12 @@ define([
 
       node.attr('transform', function(d) {
         // hard Y val for selected node
-        var topNodeY = 30;
+        var topNodeY = 40;
 
         if (preferences.selectedParty) {
           d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
-          console.log(d3.select('.selectedNode')[0][0].__data__.y)
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
-          var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
+          var onscreenY = Math.max(nodeRad * 2, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
         } else {
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
