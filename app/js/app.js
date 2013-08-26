@@ -1,14 +1,16 @@
 define([
   'jquery',
   './force-layout',
-  './controls'
-], function($, layout, controls) {
+  './controls',
+  './responsive'
+], function($, layout, controls, responsive) {
   'use strict';
 
   return {
     init: function(){
+      responsive.init();
+      layout.init();
       controls.init();
-      layout.start();
     }
   };
 

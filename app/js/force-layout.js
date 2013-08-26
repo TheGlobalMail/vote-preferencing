@@ -6,20 +6,14 @@ define([
   './collision-detection',
   './preferences-data'
 ], function($, _, d3, vent, collision, preferences) {
-
-  // Restart the layout after resize
-  var resizeTimer;
-  $(window).resize(function(){
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(start, 1000);
-  });
-
   // method to pull things to front of stage
   d3.selection.prototype.moveToFront = function() {
     return this.each(function() { this.parentNode.appendChild(this);});
   };
 
-  function start(){
+  var changeState;
+
+  function init(){
 
     // Clear the svg to start with
     $('#visualisation svg').remove();
@@ -27,7 +21,7 @@ define([
     // Scale the svg to the size of viewport
     var width = $(window).width()- 20,
         height = $(window).height() - 160,
-        nodeRad = 10,
+        nodeRad = 15,
         minDimension = _.min([width, height]),
         svg = d3.select('#visualisation').append('svg')
           .attr('width', width)
@@ -52,12 +46,18 @@ define([
     // Current node and link data in the force layout
     var linkData, nodeData;
 
+    // Loads the state data based the state control
+    changeState = function(){
+      force.stop();
+      node.remove();
+      link.remove();
+      startMutualLayout();
+    };
+
     // Returns a scale factor based on the dimensions and the current state
     function scaleFactor(){
-
       // scale by the minimum dimension
       var scale = minDimension / 90;
-
       // Scale by state XXX refactor to scale based on number of parties
       var state = preferences.selectedState;
       if (_(['wa', 'sa']).contains(state)){
@@ -69,23 +69,7 @@ define([
       }else if (_(['qld']).contains(state)){
         scale *=  1.3;
       }
-
       return scale;
-    }
-
-    // Loads the state data based the state control
-    function loadState(){
-      var state = $('#state').val().toLowerCase();
-      var $loading = $('#loading');
-      $loading.show();
-      preferences.loadState(state)
-        .always(function(){
-          force.stop();
-          $loading.hide();
-          node.remove();
-          link.remove();
-          startMutualLayout();
-        });
     }
 
     // Start the layout with forces based on mutual preferences
@@ -93,21 +77,22 @@ define([
       nodeData = preferences.parties;
       linkData = preferences.preferences;
 
+      // Set the labels to just the party names
       var labels = d3.selectAll('.labels');
-
       if (labels[0].length > 0) {
         d3.selectAll('.labels').transition()
           .text(function(d) { return d.name.replace(/ Party.*/, ''); });
       }
 
+      // Set the circles to the default size
       var nodes = d3.selectAll('.node');
       nodes.selectAll('circle').attr('r', nodeRad);
-      nodes.selectAll('text').style('font-size', '10px').attr('dx', '12');
+      nodes.selectAll('text').style('font-size', '10px').attr('dx', nodeRad * 1.2);
 
-      init();
+      startForceLayout();
     }
 
-    function init(){
+    function startForceLayout(){
       force
           .nodes(nodeData)
           .links(linkData)
@@ -163,7 +148,7 @@ define([
 
       inside.append("text")
           .attr('class', 'labels')
-          .attr('dx', '12')
+          .attr('dx', nodeRad * 1.2)
           .attr('text-anchor', 'start')
           .attr("dy", ".35em")
           .on('mouseover', labelRollover)
@@ -220,13 +205,13 @@ define([
           var group = d3.select(this);
           if (this === selected) {
             group.select('circle').transition().delay(800).duration(600).attr('r', nodeRad + 6);
-            group.select('text').attr('dx', '20').style('font-size', '16px');
-            group.select('rect').attr('x', '15');
+            group.select('text').attr('dx', nodeRad * 1.5).style('font-size', '16px');
+            group.select('rect').attr('x', nodeRad * 1.5);
 
           } else {
             group.select('circle').attr('r', nodeRad / 2);
-            group.select('text').attr('dx', '12').style('font-size', '10px');
-            group.select('rect').attr('x', '10');
+            group.select('text').attr('dx', nodeRad * 1.2).style('font-size', '10px');
+            group.select('rect').attr('x', nodeRad * 1.2);
           }
         });
 
@@ -242,21 +227,29 @@ define([
       vent.trigger('selected:party', d.name);
     }
 
-    function tick(e){
+    // Adjust positions to keep on screen and minimise collisions
+    function tick(){
       collision.adjustForCollisions(node, nodeData);
       // change center of gravity on click
-      if (preferences.selectedParty) {
-        return node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, (d.y - height / 4))) + ")";  });
-      } else {
-        return node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, d.y)) + ")";  });
-      };
+      node.attr('transform', function(d) {
+        if (preferences.selectedParty) {
+          var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
+          var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, (d.y - height / 4)));
+          return 'translate(' + onscreenX + ',' + onscreenY + ')';
+        } else {
+          var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
+          var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, d.y));
+          return 'translate(' + onscreenX + ',' + onscreenY + ')';
+        };
+      });
     }
-
-    loadState();
   }
 
   return {
-    start: start
+    init: init,
+    changeState: function(){
+      changeState();
+    }
   };
 
 });
