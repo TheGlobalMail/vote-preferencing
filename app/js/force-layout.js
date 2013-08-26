@@ -19,7 +19,7 @@ define([
     $('#visualisation svg').remove();
 
     // Scale the svg to the size of viewport
-    var width = $(window).width()- 20,
+    var width = $(window).width(),
         height = $(window).height() - 160,
         nodeRad = 15,
         minDimension = _.min([width, height]),
