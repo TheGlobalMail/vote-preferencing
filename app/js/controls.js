@@ -20,6 +20,7 @@ define([
     init: function(){
       $('#state').on('change', loadState);
       loadState();
+      $('#about-modal').modal();
     }
   };
 
