@@ -23,8 +23,8 @@ define([
     }
 
     // Scale the svg to the size of viewport
-    var width = $(window).width(),
-        height = $(window).height(),
+    var width = $(window).innerWidth(),
+        height = $(window).innerHeight() - 32,
         nodeRad = 15,
         minDimension = _.min([width, height]),
         svg = d3.select('#visualisation').append('svg')
@@ -246,7 +246,7 @@ define([
 
         if (preferences.selectedParty) {
           d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
-          var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
+          var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad - 150, d.x));
           var onscreenY = Math.max(nodeRad * 2, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
         } else {
