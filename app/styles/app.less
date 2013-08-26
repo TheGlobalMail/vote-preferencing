@@ -12,8 +12,8 @@
 @white:           rgb(255,255,255);
 
 body {
-  background: @grayDarker;
-  // #gradient > .vertical(@black, @grayDarker);
+  background: @grayLightest;
+  #gradient > .vertical(@grayLightest, @grayLighter);
   .font-size(16);
 }
 
@@ -58,9 +58,9 @@ body {
   .node {
 
     text {
-      font-size: 13px;
+      font-size: 14px;
       font-family: @baseFontFamily;
-      font-weight: 600;
+      font-weight: 400;
       transition: font-size .5s ease
     }
 
@@ -72,25 +72,26 @@ body {
       text {
         font-size: 16px;        
       }
+      .labels {
+        fill: @black;
+      }
     }
 
   }
 
 
-
-
   .text-background{
-    fill: @grayDarker;
+    fill: @grayLightest;
     fill-opacity: 0.8;
   }
 
   .labels {
-    fill: @grayLightest;
+    fill: @grayDarker;
   }
 
   circle{
     fill: @gray;
-    stroke: @black;
+    stroke: @grayLightest;
     stroke-width: 3;
 
     &.greens{
