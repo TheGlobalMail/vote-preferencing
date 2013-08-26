@@ -11,6 +11,9 @@
 @grayLightest:    rgb(250,250,250);
 @white:           rgb(255,255,255);
 
+@lemon:           rgb(250, 211, 88);
+@trspLemon:       rgba(250, 211, 88,0.3);
+
 body {
   background: @grayLightest;
   #gradient > .vertical(@grayLightest, @grayLighter);
@@ -32,25 +35,57 @@ body {
   position: relative;
   h1 {
     font-family: @sansFontFamily;
-  .font-size(20);
-    color: @white;
-    font-weight: 100;
-    text-transform: uppercase;
+    .font-size(22);
+    color: @lemon;
+    margin: 0;
+    line-height: 1;
+    font-weight: 200;
     display: inline-block;
   }
   form {
     display: inline-block;
+    margin: 0; 
   }
   label {
     display: inline-block;
-    color: @white;
+    color: @gray;
+    .font-size(20);
+    margin: 0;
+    margin-left: 8px;
+    line-height: 30px;
+    padding-top: 5px;
   }
   .select-wrapper {
     display: inline-block;
-    width: 80px;
+    width: 100px;
     overflow: hidden;
-    color: @white;
+    position: relative;
+    vertical-align: top;
+    margin-top: 2px;
+    margin-left: 3px;
+    .border-radius(4px);
+    select {
+      outline: none;
+      width: 100px;
+      .font-size(22);
+      line-height: 1;
+      height: 30px;
+      margin: 0;
+      padding: 0 4px;
+      color: @grayDarker;
+      font-weight: 700;
+      border: 0px none;
+      .border-radius(0);
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
+}
+
+.special-feature-links {
+  line-height: 1.2;
 }
 
 #visualisation svg{
@@ -230,12 +265,46 @@ footer {
 .modal {
   background: @grayDarker;  
   color: @grayLighter;
+  .border-radius(10px);
+  border: 0 none;
+  line-height: 1.6;
+
+  .close {
+    color: @gray;
+    opacity: 0.5;
+    text-shadow: 0 0 0 transparent;
+    font-size: 30px;
+    margin-top: 5px;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .modal-header {
+    // background: @lemon;
+    padding: 10px 20px;
+    .border-top-radius(10px);
+    h3 {
+      .font-size(22);
+      color: @lemon;
+      margin: 0;
+      line-height: 30px;
+      font-weight: 200;
+    }
+  }
+
+  .modal-body {
+    padding: 20px;
+    padding-top: 10px;
+  }
+
+  .modal-footer {
+    background: @grayDarker; 
+    border-top: 1px solid black; 
+  }
+
 }
 
-.modal-footer {
-  background: @grayDarker; 
-  border-top: 1px solid black; 
-}
 
 .credits {
   .tgm {
@@ -243,5 +312,12 @@ footer {
     text-indent: -9000px;
     background: transparent url(/images/footer-logo.png) 0 0 no-repeat;   
     display: block; 
+  }
+  list-style: none;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  li {
+    padding-bottom: 6px;
   }
 }
