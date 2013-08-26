@@ -1,14 +1,16 @@
 define([
   'jquery',
+  './preferences-data',
   './force-layout'
-], function($, layout) {
+], function($, preferences, layout) {
 
   return {
     init: function(){
-      $('#state').on('change', function(e) {
-        e.preventDefault();
+      // Reset the party
+      $('#state').on('change', function(){
+        preferences.selectedParty = null;
         layout.start();
-    });
+      });
     }
   };
 
