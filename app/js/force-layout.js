@@ -146,7 +146,7 @@ define([
             return 'greens';
           }else if (d.name.match(/australian labor/i)){
             return 'alp';
-          }else if (d.name.match(/coalition/i)){
+          }else if (d.name.match(/coalition|liberal national/i)){
             return 'coalition';
           }
         })
