@@ -206,13 +206,13 @@ define([
             group.select('circle').transition().delay(800).duration(600).attr('r', nodeRad + 6);
             group.select('text').attr('dx', nodeRad * 1.5).style('font-size', '16px');
             group.select('rect').attr('x', nodeRad * 1.5);
-            group.classed('selectedNode', true)
+            group.classed('selectedNode', true);
 
           } else {
             group.select('circle').attr('r', nodeRad / 2);
             group.select('text').attr('dx', nodeRad * 1.2).style('font-size', '10px');
             group.select('rect').attr('x', nodeRad * 1.2);
-            group.classed('selectedNode', false)
+            group.classed('selectedNode', false);
           }
         });
 
@@ -229,14 +229,17 @@ define([
     }
 
     // Adjust positions to keep on screen and minimise collisions
-    function tick(){
+    function tick(e){
       collision.adjustForCollisions(node, nodeData);
       // change center of gravity on click
 
       node.attr('transform', function(d) {
+        var topNodeY = 20;
+
         if (preferences.selectedParty) {
+          d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
-          var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, (d.y - height / 4)));
+          var onscreenY = Math.max(nodeRad, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
           return 'translate(' + onscreenX + ',' + onscreenY + ')';
         } else {
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad, d.x));
