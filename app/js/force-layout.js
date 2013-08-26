@@ -35,7 +35,6 @@ define([
         link =  svg.selectAll('.link'),
         node = svg.selectAll('.node');
 
-
     // Start the force layout. Scale the distance and charge based on whether
     // a party is selected or not and the preferences between the parties
     var force = d3.layout.force()
@@ -52,7 +51,6 @@ define([
 
     // Current node and link data in the force layout
     var linkData, nodeData;
-
 
     // Returns a scale factor based on the dimensions and the current state
     function scaleFactor(){
@@ -215,32 +213,20 @@ define([
       }
       preferences.selectedParty = d.index;
 
+      // update some visuals on click
       var selected = this;
-
       d3.selectAll('.node')
         .each(function () {
           var group = d3.select(this);
           if (this === selected) {
-            group.select('circle').transition()
-              .delay(800).duration(600)
-              .attr('r', nodeRad + 6);
+            group.select('circle').transition().delay(800).duration(600).attr('r', nodeRad + 6);
+            group.select('text').attr('dx', '20').style('font-size', '16px');
+            group.select('rect').attr('x', '15');
+
           } else {
             group.select('circle').attr('r', nodeRad / 2);
-          }
-        });
-
-      d3.selectAll('.node')
-        .each(function () {
-          var group = d3.select(this);
-          if (this === selected) {
-            group.select('text').transition()
-              .delay(800).duration(600)
-              .attr('dx', '15')
-              .style('font-size', '14px');
-          } else {
-            group.select('text')
-              .attr('dx', '12')
-              .style('font-size', '10px');
+            group.select('text').attr('dx', '12').style('font-size', '10px');
+            group.select('rect').attr('x', '10');
           }
         });
 
@@ -256,11 +242,14 @@ define([
       vent.trigger('selected:party', d.name);
     }
 
-    function tick(){
-
+    function tick(e){
       collision.adjustForCollisions(node, nodeData);
-
-      node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, d.y)) + ")";  });
+      // change center of gravity on click
+      if (preferences.selectedParty) {
+        return node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, (d.y - height / 4))) + ")";  });
+      } else {
+        return node.attr("transform", function(d) { return "translate(" + Math.max(nodeRad, Math.min(width - nodeRad, d.x)) + "," + Math.max(nodeRad, Math.min(height - nodeRad, d.y)) + ")";  });
+      };
     }
 
     loadState();
