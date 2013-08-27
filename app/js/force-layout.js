@@ -188,7 +188,7 @@ define([
           .attr('width', function(d){
             var length = displayName(d).length;
             if (splits.hasSplit(preferences.selectedState, d.name)){
-              length += 8;
+              length += 4;
             }
             return length * 0.6 + 'em';
           })
