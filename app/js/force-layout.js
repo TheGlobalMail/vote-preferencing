@@ -59,6 +59,11 @@ define([
         e.preventDefault();
     });
 
+    $('#planet').click(function(e) {
+        $('#visualisation').toggleClass('celestial');
+        e.preventDefault();
+    });
+
     // Returns a scale factor based on the dimensions and the current state
     function scaleFactor(){
       // scale by the minimum dimension

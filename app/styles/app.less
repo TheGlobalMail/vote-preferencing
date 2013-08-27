@@ -106,6 +106,27 @@ body {
     fill: none;
     fill-opacity: 0;
   }
+
+  .labels {
+    fill: @white;
+  }
+  circle{
+    fill: @gray;
+    stroke: transparent;
+    stroke-width: 3;
+  }
+
+  .node.selectedNode {
+    text {
+      font-size: 16px;
+    }
+    .labels {
+      fill: @lemon;
+      fill-opacity: 1;
+    }
+  }
+
+
 }
 
 #visualisation svg{
@@ -321,6 +342,7 @@ footer {
   .modal-body {
     padding: 20px;
     padding-top: 10px;
+    position: relative;
   }
 
   .modal-footer {
@@ -346,6 +368,23 @@ footer {
   li {
     color: @grayLight;
     padding-bottom: 6px;
+  }
+}
+
+#planet {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background: url(/images/planet.png) center center no-repeat;
+  background-size: contain;
+  opacity: 0.5;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
   }
 }
 
