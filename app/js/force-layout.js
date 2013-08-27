@@ -186,7 +186,11 @@ define([
           .attr('y', '-0.6em')
           .attr('x', nodeRad * 1.2)
           .attr('width', function(d){
-            return displayName(d).length * 0.6 + 'em';
+            var length = displayName(d).length;
+            if (splits.hasSplit(preferences.selectedState, d.name)){
+              length += 8;
+            }
+            return length * 0.6 + 'em';
           })
           .attr('height', '1.2em');
 
@@ -200,7 +204,11 @@ define([
             d3.selectAll('.labels').transition()
               .style('fill-opacity', 0.8)
             })
-          .text(displayName);
+          .text(function(d){
+            var label = displayName(d);
+            label += splits.hasSplit(preferences.selectedState, d.name) ? ' (1st split)' : '';
+            return label;
+          });
     }
 
     function labelRollover() {
@@ -211,9 +219,7 @@ define([
     }
 
     function displayName(node){
-      var label = preferences.selectedParty ? '1. ' : '';
-      label += node.name.replace(/ Party.*/, '');
-      return label;
+      return node.name.replace(/ Party.*/, '');
     }
 
     function partyList(){
@@ -233,7 +239,11 @@ define([
 
       d3.selectAll('.labels')
         .transition().text(function(d) {
-          return d.name.replace(/ Party.*/, '') + (d.rank ? ' (' + d.rank + ')' : '') ;
+          var label = displayName(d);
+          if (d === source && splits.hasSplit(preferences.selectedState, d.name)){
+            label += ' (using 1st split ticket)';
+          }
+          return label;
         });
     }
 
