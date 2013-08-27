@@ -34,13 +34,15 @@ define([
     var defs = svg.append('svg:defs');
     defs.append('svg:pattern')
       .attr({
-        id: 'triangle',
-        width: 10,
-        height: 10,
+        id: 'diagonal',
+        width: 5,
+        height: 5,
         patternUnits: 'userSpaceOnUse'
       })
-      .append('polygon')
-        .attr('points', '5, 0 10, 10 0, 10')
+      .append('svg:image')
+        .attr('width', 5)
+        .attr('height', 5)
+        .attr('xlink:href', '../images/pattern.png')
 
     // Start the force layout. Scale the distance and charge based on whether
     // a party is selected or not and the preferences between the parties
@@ -174,7 +176,7 @@ define([
         // use pattern fill if it is split vote
         .style('fill', function (d){
           if (splits.hasSplit(preferences.selectedState, d.name)){
-            return 'url(/#triangle)';
+            return 'url(/#diagonal)';
           }
         })
         .attr("r", nodeRad);
