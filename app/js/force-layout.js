@@ -4,8 +4,9 @@ define([
   'd3',
   './vent',
   './collision-detection',
-  './preferences-data'
-], function($, _, d3, vent, collision, preferences) {
+  './preferences-data',
+  './splits',
+], function($, _, d3, vent, collision, preferences, splits) {
   // method to pull things to front of stage
   d3.selection.prototype.moveToFront = function() {
     return this.each(function() { this.parentNode.appendChild(this);});
@@ -131,7 +132,13 @@ define([
       var nodeEnter = node.enter()
 
       var inside = nodeEnter.append("g")
-        .attr("class", "node")
+        .attr("class", function(d){
+          var classes = ['node'];
+          if (splits.hasSplit(preferences.selectedState, d.name)){
+            classes.push('split');
+          }
+          return classes.join('  ');
+        })
         .attr("pointer-events", "all")
         .on('mouseover', function() {
             if (!$('html').hasClass('ie')) {
