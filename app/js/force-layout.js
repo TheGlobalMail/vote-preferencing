@@ -30,6 +30,18 @@ define([
         link =  svg.selectAll('.link'),
         node = svg.selectAll('.node');
 
+    // svg definitions for pattern
+    var defs = svg.append('svg:defs');
+    defs.append('svg:pattern')
+      .attr({
+        id: 'triangle',
+        width: 10,
+        height: 10,
+        patternUnits: 'userSpaceOnUse'
+      })
+      .append('polygon')
+        .attr('points', '5, 0 10, 10 0, 10')
+
     // Start the force layout. Scale the distance and charge based on whether
     // a party is selected or not and the preferences between the parties
     var force = d3.layout.force()
@@ -132,13 +144,14 @@ define([
       var nodeEnter = node.enter()
 
       var inside = nodeEnter.append("g")
-        .attr("class", function(d){
-          var classes = ['node'];
-          if (splits.hasSplit(preferences.selectedState, d.name)){
-            classes.push('split');
-          }
-          return classes.join('  ');
-        })
+        // .attr("class", function(d){
+        //   var classes = ['node'];
+        //   if (splits.hasSplit(preferences.selectedState, d.name)){
+        //     classes.push('split');
+        //   }
+        //   return classes.join('  ');
+        // })
+        .attr('class', 'node')
         .attr("pointer-events", "all")
         .on('mouseover', function() {
             if (!$('html').hasClass('ie')) {
@@ -156,6 +169,12 @@ define([
             return 'alp';
           }else if (d.name.match(/coalition|liberal national/i)){
             return 'coalition';
+          }
+        })
+        // use pattern fill if it is split vote
+        .style('fill', function (d){
+          if (splits.hasSplit(preferences.selectedState, d.name)){
+            return 'url(/#triangle)';
           }
         })
         .attr("r", nodeRad);
