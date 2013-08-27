@@ -18,10 +18,6 @@ define([
     // Clear the svg to start with
     $('#visualisation svg').remove();
 
-    if (location.search.indexOf('celestial') !== -1){
-      $('#visualisation').addClass('celestial');
-    }
-
     // Scale the svg to the size of viewport
     var width = $(window).innerWidth(),
         height = $(window).innerHeight() - 60,
@@ -60,7 +56,7 @@ define([
     });
 
     $('#planet').click(function(e) {
-        $('#visualisation').toggleClass('celestial');
+        $('body').toggleClass('celestial');
         e.preventDefault();
     });
 

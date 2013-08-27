@@ -96,36 +96,39 @@ body {
     display: none;
   }
 }
+.celestial-credit {
+  display: none;
+}
 
+.celestial {
+  #visualisation svg{
+    background: url(/images/background.jpg) no-repeat;
+    background-size: cover;
 
-#visualisation.celestial svg{
-  background: url(/images/background.jpg) no-repeat;
-  background-size: cover;
-
-  .text-background{
-    fill: none;
-    fill-opacity: 0;
-  }
-
-  .labels {
-    fill: @white;
-  }
-  circle{
-    fill: @gray;
-    stroke: transparent;
-    stroke-width: 3;
-  }
-
-  .node.selectedNode {
-    text {
-      font-size: 16px;
+    .text-background{
+      fill: none;
+      fill-opacity: 0;
     }
+
     .labels {
-      fill: @lemon;
-      fill-opacity: 1;
+      fill: @white;
+    }
+    circle{
+      fill: @gray;
+      stroke: transparent;
+      stroke-width: 3;
+    }
+    .node.selectedNode {
+      .labels {
+        fill: @lemon;
+        fill-opacity: 1;
+      }
     }
   }
 
+  .celestial-credit {
+    display: block;
+  }
 
 }
 
