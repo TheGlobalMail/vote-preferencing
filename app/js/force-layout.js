@@ -50,10 +50,10 @@ define([
     var force = d3.layout.force()
         .gravity(0.5)
         .distance(function(d, i){
-          return (preferences.selectedParty ? i * 3 : d.mutualValue) * scaleFactor();
+          return (!_.isNull(preferences.selectedParty) ? i * 3 : d.mutualValue) * scaleFactor();
         })
         .charge(function(d){
-          return -2 * Math.pow(2, preferences.selectedParty ? d.individualValue : d.mutualValue);
+          return -2 * Math.pow(2, !_.isNull(preferences.selectedParty) ? d.individualValue : d.mutualValue);
         })
         .size([width, height])
         .on('tick', tick);
@@ -131,7 +131,7 @@ define([
       link =  svg.selectAll(".link");
       node = svg.selectAll(".node");
 
-      link = link.data(preferences.selectedParty ? linkData : []);
+      link = link.data(!_.isNull(preferences.selectedParty) ? linkData : []);
 
       // remove anything not in the data anymore
       link.exit().remove();
@@ -300,7 +300,7 @@ define([
         var topNodeY = 40;
 
         // change center of gravity if in party state
-        if (preferences.selectedParty) {
+        if (!_.isNull(preferences.selectedParty)) {
           d3.select('.selectedNode')[0][0].__data__.y = topNodeY;
           var onscreenX = Math.max(nodeRad, Math.min(width - nodeRad - 150, d.x));
           var onscreenY = Math.max(nodeRad * 2, Math.min(height - nodeRad, (topNodeY + d.y - (height / 6))));
