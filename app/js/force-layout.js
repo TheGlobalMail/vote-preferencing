@@ -43,7 +43,7 @@ define([
       .append('svg:image')
         .attr('width', 5)
         .attr('height', 5)
-        .attr('xlink:href', '/images/pattern.png')
+        .attr('xlink:href', 'http://preferences-assets.theglobalmail.org/images/pattern.png')
 
     // Start the force layout. Scale the distance and charge based on whether
     // a party is selected or not and the preferences between the parties
@@ -180,7 +180,7 @@ define([
         // use pattern fill if it is split vote
         .style('fill', function (d){
           if (splits.hasSplit(preferences.selectedState, d.name)){
-            return 'url(/#diagonal)';
+            return 'url(#diagonal)';
           }
         })
         .attr("r", nodeRad);
