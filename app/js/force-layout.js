@@ -255,7 +255,7 @@ define([
       if (d3.event && d3.event.defaultPrevented) return; // ignore drag
       if (preferences.selectedParty === d.index){
         preferences.selectedParty = null;
-        return startMutualLayout();
+        return vent.trigger('reset');
       }
       preferences.selectedParty = d.index;
 
