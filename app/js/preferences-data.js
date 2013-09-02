@@ -4,6 +4,10 @@ define([
   './vent'
 ], function($, _, vent) {
 
+  function cleanedPartyName(name){
+    return name.toString().toLowerCase().replace(/ /g, '-').replace(/[^a-z-]/g, '');
+  }
+
   return {
 
     // The current state the preferences are loaded for
@@ -20,12 +24,13 @@ define([
 
     // Maps party name back to index in parties array
     partyIndex: [],
-
+    
     // Cached list of party names
     names: [],
 
     // Load preference data for the give state. Returns a promise
     loadState: function(state){
+      this.selectedParty = null;
       this.selectedState = state;
       vent.trigger('selected:state', this.selectedState);
       // TODO: add caching of state data or be lazy and rely http caching??
@@ -40,7 +45,10 @@ define([
       preferences.parties = [];
       preferences.partyIndex = {};
       _.each(json, function(row, index){
-        preferences.parties.push({ name: row.Party });
+        preferences.parties.push({
+          name: row.Party,
+          cleaned: cleanedPartyName(row.Party)
+        });
         preferences.partyIndex[row.Party] = index;
       });
       preferences.names = _.pluck(preferences.parties, 'name');
@@ -70,6 +78,8 @@ define([
         });
         preference.mutualValue = (preference.individualValue + coPref.individualValue) / 2;
       });
+
+      vent.trigger('loaded:state', this.selectedState);
     }
   };
 });

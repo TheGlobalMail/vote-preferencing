@@ -3,8 +3,11 @@ define([
   './force-layout',
   './controls',
   './responsive',
+  './router',
+  './loading',
+  './tracking',
   'bootstrapmodal'
-], function($, layout, controls, responsive) {
+], function($, layout, controls, responsive, router) {
   'use strict';
 
   return {
@@ -12,6 +15,7 @@ define([
       responsive.init();
       layout.init();
       controls.init();
+      router.init();
     }
   };
 

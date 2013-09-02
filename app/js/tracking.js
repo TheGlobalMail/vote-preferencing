@@ -1,7 +1,7 @@
-define(
+define([
   './vent'
 ], function(vent) {
- 
+
   vent.on('selected:state', function(state){
     window._gaq && _gaq.push(['_trackEvent', 'State Selected', 'State', state]);
   });

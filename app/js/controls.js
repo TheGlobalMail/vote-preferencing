@@ -1,25 +1,25 @@
 define([
   'jquery',
-  './preferences-data',
-  './force-layout'
-], function($, preferences, layout) {
+  './vent',
+  './router'
+], function($, vent, router) {
+
+  var $state = $('#state');
 
   function loadState(){
-    preferences.selectedParty = null;
-    var state = $('#state').val().toLowerCase();
-    var $loading = $('#loading');
-    $loading.show();
-    preferences.loadState(state)
-      .always(function(){
-        $loading.hide();
-        layout.changeState();
-      });
+    var state = $state.val().toLowerCase();
+    router.navigate(state, { trigger: true });
   }
+
+  // update the control if the router changes the state
+  vent.on('router:selected:state', function(state){
+    $state.val(state);
+  });
+
 
   return {
     init: function(){
       $('#state').on('change', loadState);
-      loadState();
       $('#about-modal').modal();
     }
   };

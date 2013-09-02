@@ -154,6 +154,9 @@ define([
         //   return classes.join('  ');
         // })
         .attr('class', 'node')
+        .attr('data-cleaned', function(d){
+          return d.cleaned;
+        })
         .attr("pointer-events", "all")
         .on('mouseover', function() {
             if (!$('html').hasClass('ie')) {
@@ -248,7 +251,7 @@ define([
     }
 
     function click(d){
-      if (d3.event.defaultPrevented) return; // ignore drag
+      if (d3.event && d3.event.defaultPrevented) return; // ignore drag
       if (preferences.selectedParty === d.index){
         preferences.selectedParty = null;
         return startMutualLayout();
@@ -284,7 +287,7 @@ define([
       linkData = partyLinks;
       partyList();
 
-      vent.trigger('selected:party', d.name);
+      vent.trigger('selected:party', d.cleaned);
     }
 
     // Adjust positions to keep on screen and minimise collisions
@@ -309,6 +312,10 @@ define([
       });
     }
   }
+
+  vent.on('loaded:state', function(state){
+    changeState(state);
+  });
 
   return {
     init: init,
