@@ -6,6 +6,8 @@ define([
   'backbone'
 ], function($, _, preferences, vent, Backbone) {
 
+  var failed = false;
+
   var Router = Backbone.Router.extend({
 
     routes: {
@@ -20,7 +22,14 @@ define([
 
     loadState: function(state) {
       vent.trigger('router:selected:state', state);
-      return preferences.loadState(state);
+      var router = this;
+      return preferences.loadState(state).fail(function(){
+        // Retry loading default once in case it was loaded with shit url
+        if (!failed){
+          failed = true;
+          router.navigate('', { trigger: true });
+        }
+      });
     },
 
     loadParty: function(state, cleanParty) {

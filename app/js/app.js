@@ -1,5 +1,6 @@
 define([
   'jquery',
+  './vent',
   './force-layout',
   './controls',
   './responsive',
@@ -7,7 +8,7 @@ define([
   './loading',
   './tracking',
   'bootstrapmodal'
-], function($, layout, controls, responsive, router) {
+], function($, vent, layout, controls, responsive, router) {
   'use strict';
 
   return {
