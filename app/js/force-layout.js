@@ -5,8 +5,9 @@ define([
   './vent',
   './collision-detection',
   './preferences-data',
+  './router',
   './splits',
-], function($, _, d3, vent, collision, preferences, splits) {
+], function($, _, d3, vent, collision, preferences, router, splits) {
   // method to pull things to front of stage
   d3.selection.prototype.moveToFront = function() {
     return this.each(function() { this.parentNode.appendChild(this);});
@@ -65,9 +66,9 @@ define([
       startMutualLayout();
     };
 
-    $('#reset-link').click(function(e) {
-        changeState();
-        e.preventDefault();
+    $('#reset-link').click(function(e){
+      vent.trigger('reset');
+      e.preventDefault();
     });
 
     $('#planet').click(function(e) {

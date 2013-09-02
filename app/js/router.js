@@ -53,6 +53,11 @@ define([
     router.navigate(preferences.selectedState + '/' + cleanParty, { trigger: false });
   });
 
+  vent.on('reset', function(){
+    router.navigate(preferences.selectedState, { trigger: true });
+  });
+
+
   return router;
 
 });
