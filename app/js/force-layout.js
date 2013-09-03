@@ -15,7 +15,7 @@ define([
 
   var changeState;
 
-  var notIE = !$('html').hasClass('ie');
+  var notIE = !$('html').hasClass('ie') && window.navigator.appName !== 'Microsoft Internet Explorer';
 
   function init(){
 
