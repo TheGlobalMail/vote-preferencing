@@ -15,6 +15,8 @@ define([
 
   var changeState;
 
+  var notIE = !$('html').hasClass('ie');
+
   function init(){
 
     // Clear the svg to start with
@@ -160,7 +162,7 @@ define([
         })
         .attr("pointer-events", "all")
         .on('mouseover', function() {
-            if (!$('html').hasClass('ie')) {
+            if (!isIE) {
                 d3.select(this).moveToFront();
             };
         })
