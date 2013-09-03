@@ -162,7 +162,7 @@ define([
         })
         .attr("pointer-events", "all")
         .on('mouseover', function() {
-            if (!isIE) {
+            if (notIE) {
                 d3.select(this).moveToFront();
             };
         })
