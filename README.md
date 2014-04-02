@@ -1,84 +1,49 @@
-# Vote Preferencing
+# Preference Game
 
-* **Staging URL:** [http://cool-project.herokuapp.com/](http://cool-project.herokuapp.com/)
-* **Production URL:** [http://cool-project.theglobalmail.org/](http://cool-project.theglobalmail.org/)
+This project was built during the 2013 Australian Federal election to visualise
+the preference tickets in the Senate. It was a collaboration betwen
+the OpenAustralia Foundation and The Global Mail with data from Below The Line.
+The project is being open-sourced so that it can be reused in future elections.
 
-## Installing
+Please make sure you understand the limitations of this visualisation before
+using it. It is a simplified model of preference deals and it doesn't take into
+account factors such as split tickets. The dynamic physics engine also means that 
+the distance between the parties may change with interaction.
 
-Assuming you have `grunt-cli` and `bower` installed globally:
+Please submit a github issue if you have any questions.
 
-1. Clone the repo
-2. Run `npm install`
-3. Run `./bower-install` (this script will install a nested bootstrap in tgm-bootstrap so the LESS can compile properly).
+## Instructions
 
-## Setting up the CDN
+This visualisation opens showing Australia’s relative political relationships
+this election — the closer two parties are in their preference deals, the
+closer they appear to each other — and vice versa.
 
-1. Log into [https://mycloud.rackspace.com/](https://mycloud.rackspace.com/) with the `theglobalmail` account.
-2. Go to `Files` and click `Create Container` and use the project name as the name.
-3. Enable the CDN as a container
-4. Modify the TTL to be something short e.g. 900 (15 minutes as opposed to default 72 hours) for development.
-5. Note the HTTP link. This will be used as the CNAME for the project or as the
-   backend for Fast.ly.
-6. The CDN will not serve index.html as default index file. To enable it you must run the following (replacing RACKSPACE_AUTH_KEY with the Rackspace API key): `curl -H "X-Auth-User: theglobalmail" -H "X-Auth-Key: RACKSPACE_AUTH_KEY" https://auth.api.rackspacecloud.com/v1.0/ -v`
-7. Look for `X-Auth-Token: XXXXXXXX-XXXX-XXXX-XXXX-XXXfXXXXXXXX` in the headers of the response.
-8. Use the token in this command (replace the token and the container name): `curl -X POST -H "X-Container-Meta-Web-Index: index.html" -H "X-Auth-Token: REPLACE_WITH_TOKEN" "https://storage101.dfw1.clouddrive.com/v1/MossoCloudFS_3d82889b-f53d-44ae-b198-bd722f87fff8/REPLACE_CONTAINER_NAME/" -v`
-9. Set up a CNAME entry in AWS Route53 for
-   `projectname-assets.theglobalmail.org` pointing to the CDN http domain.
-10. If push-state url support is not required, add another CNAME entry for the
-    main site pointing to the CDN.
-11. Repeat for any other environments i.e.
-    `projectname-staging-assets.theglobalmail.org`.
+Click on any party and watch its preferences flow in (numbered) order
+underneath. (Notice some skipped numbers? The party above must have several
+candidates.)
 
-Notes:
-* You can easily upload or modify files with CyberDuck if need be.
-* You can purge a file via CyberDuck or via the Rackspace interface. File
-purging is not instant.
+Where a party splits its ticket, it shows up like circle with diagonal lines. This visualisation uses
+the first ticket only. Visit http://belowtheline.org.au for more detail on how the
+other tickets would play out. For psephologist Antony Green's guide, read
+http://blogs.abc.net.au/antonygreen/2013/08/voting-below-the-line-in-the-senate.html.
 
-## Setting up Fast.ly
+To learn how this data is like the Eurovision Song Contest, read
+https://www.openaustraliafoundation.org.au/2013/08/26/an-experiment-in-visualising-preferences/.
 
-Fastly is only required if you need support for push-state urls. If not, skip
-this step.
+Oh, and just for fun, whip them around and show them who’s boss in a democracy.
 
-This process is difficult to describe. Use the `talkingheads` project as an
-example. The push-state relevant part is in the `Content` section and the
-`catch all` request configuration.
+## Install
 
-The backend url should be the `-assets` domain pointing to the CDN.
+`npm install`
+`bower install`
 
-Create a CNAME entry in AWS Route53 for the site pointing to `prod.a.fastly.com`.
+## Credits
 
-## Development server and building
+Concept: Matthew Landauer - OpenAustralia Foundation
+Interactive Developers: Pat Armstrong, B.J. Rossiter and Nikhil Sonnad
+Researcher: Clare Blumer
+NGC 5189: NASA, ESA, and the Hubble Heritage Team (STScI/AURA)
 
-The build system is made on Grunt v0.4+
+## Licence
 
-* `$ grunt` will build the whole project for production into a `./dist` folder
-* `$ grunt build:staging` Build for staging (different CDN url)
-* `$ grunt server` will start a dev server (default port 9000) with livereload, etc. LESS is compiled automatically.
-
-The `dist/` folder isn't ignored by Git, so be careful not run it on a development branch and then accidentally commit it.
-
-## Deploying
-
-For staging, use a free Heroku instance so we don't have to worry about caching. For production, push directly to the CDN. Deployment is done on a throw-away branch.
-
-**Pushing to the CDN requires you to set a `RACKSPACE_API_KEY` enviroment variable.**
-
-### Deploying to the CDN
-1. `$ grunt` or `$ grunt build:staging`
-2. `$ grunt cloudfiles:[staging|dist]`
-3. `$ grunt clean:dist`
-
-
-### Deploying to Heroku
-1. `$ git checkout -b deploy`
-2. `$ grunt build:staging`
-3. `$ git add dist/`
-4. `$ git commit -m "Build" dist/`
-5. `$ grunt cloudfiles:staging`
-6. *Staging only* `$ git push heroku deploy:master --force`
-7. `$ git checkout master`
-8. `$ git branch -D deploy`
-
-## Adding libraries, frameworks, dependencies
-
-Most libraries are available through Bower, check using `bower search`. When doing `bower install` remember to add the `--save` flag so the component gets added to `component.json`. Components are installed into `app/components` which is ignored by Git.
+GPLv3, see the LICENSE file for full details.
