@@ -1,8 +1,7 @@
 # Preference Game
 
-This project was built during the 2013 Australian Federal election to visualise
-the preference tickets in the Senate. It was a collaboration betwen
-the OpenAustralia Foundation and The Global Mail with data from Below The Line.
+This project was built to visualise the preference tickets in the Senate during the 2013 Federal Election.
+It was a collaboration betwen the OpenAustralia Foundation and The Global Mail with data from Below The Line.
 The project is being open-sourced so that it can be reused in future elections.
 
 Please make sure you understand the limitations of this visualisation before
