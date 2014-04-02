@@ -35,13 +35,17 @@ Oh, and just for fun, whip them around and show them who’s boss in a democracy
 ## Install
 
 `npm install`
+
 `bower install`
 
 ## Credits
 
 Concept: Matthew Landauer - OpenAustralia Foundation
+
 Interactive Developers: Pat Armstrong, B.J. Rossiter and Nikhil Sonnad
+
 Researcher: Clare Blumer
+
 NGC 5189: NASA, ESA, and the Hubble Heritage Team (STScI/AURA)
 
 ## Licence
